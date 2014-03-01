@@ -1,0 +1,13 @@
+application: primenumbertweet
+version: 8-0
+runtime: python27
+api_version: 1
+threadsafe: false
+
+libraries:
+- name: ssl
+  version: "latest"
+
+handlers:
+- url: .*
+  script: main.py
