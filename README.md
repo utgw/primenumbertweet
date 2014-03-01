@@ -1,4 +1,4 @@
-sosuubot
+primenumbertweet
 ========
  ... is now tweeting on [@sosuubot](https://twitter.com/sosuubot)!
 
