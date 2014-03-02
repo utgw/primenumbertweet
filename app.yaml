@@ -11,3 +11,9 @@ libraries:
 handlers:
 - url: .*
   script: main.py
+
+skip_files:
+- \.gitignore
+- \.git/
+- README.md
+- LICENSE
