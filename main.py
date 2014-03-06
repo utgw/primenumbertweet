@@ -17,7 +17,7 @@ class TweetHandler(webapp2.RequestHandler):
   def get(self):
     global api
     if self.request.headers.get("X-Appengine-Cron"):
-      try: num = int(list(api.user_timeline(screen_name='sosuubot', count=1))[0].text.rstrip()) + 1
+      try: num = int(list(api.user_timeline(screen_name=api.me().screen_name, count=1))[0].text.rstrip()) + 1
       except tweepy.TweepError: num = 2
       else:
         while True:

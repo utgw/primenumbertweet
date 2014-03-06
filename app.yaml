@@ -13,7 +13,8 @@ handlers:
   script: main.py
 
 skip_files:
-- \.gitignore
+- \.gitignore$
 - \.git/
-- README.md
+- .*\.pyc$
+- README\.md
 - LICENSE
