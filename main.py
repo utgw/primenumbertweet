@@ -20,12 +20,9 @@ class TweetHandler(webapp2.RequestHandler):
       try: num = int(list(api.user_timeline(screen_name=api.me().screen_name, count=1))[0].text) + 1
       except tweepy.TweepError: num = 2
       else:
-        while True:
-          if isp(num):
-            try: api.update_status(str(num))
-            except tweepy.TweepError: pass
-            finally: break
-          num += 1
+        try: api.update_status(('%d は素数%s'%(num, 'です' if isp(num) else 'ではありません')).encode())
+        except tweepy.TweepError: pass
+        finally: break
 
 app = webapp2.WSGIApplication([('/tweet',TweetHandler)],debug=True)
 
