@@ -1,6 +1,6 @@
 # coding: utf-8
 from math import sqrt
-import webapp2, tweepy
+import webapp2, tweepy, re
 from key import ckey, csec, atok, asec
 
 auth = tweepy.OAuthHandler(ckey,csec)
@@ -17,10 +17,12 @@ class TweetHandler(webapp2.RequestHandler):
   def get(self):
     global api
     if self.request.headers.get("X-Appengine-Cron"):
-      try: num = int(list(api.user_timeline(screen_name=api.me().screen_name, count=1))[0].text) + 1
+      try: num = int(re.search(r'(\d+)',list(api.user_timeline(screen_name=api.me().screen_name, count=1))[0].text).group(1)) + 1
       except tweepy.TweepError: num = 2
       else:
-        try: api.update_status(('%d は素数%s'%(num, 'です' if isp(num) else 'ではありません')).encode())
+        text = u'%d は素数'%num
+        text += u'です' if isp(num) else u'ではありません'
+        try: api.update_status(text)
         except tweepy.TweepError: pass
 
 app = webapp2.WSGIApplication([('/tweet',TweetHandler)],debug=True)
