@@ -22,7 +22,6 @@ class TweetHandler(webapp2.RequestHandler):
       else:
         try: api.update_status(('%d は素数%s'%(num, 'です' if isp(num) else 'ではありません')).encode())
         except tweepy.TweepError: pass
-        finally: break
 
 app = webapp2.WSGIApplication([('/tweet',TweetHandler)],debug=True)
 
