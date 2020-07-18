@@ -1,0 +1,6 @@
+\.gitignore$
+\.git/
+.*\.pyc$
+README\.md
+LICENSE
+ENV

@@ -4,11 +4,3 @@ api_version: 1
 handlers:
 - url: .*
   script: main.py
-
-skip_files:
-- \.gitignore$
-- \.git/
-- .*\.pyc$
-- README\.md
-- LICENSE
-- ENV
