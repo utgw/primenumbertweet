@@ -1,12 +1,12 @@
 # coding: utf-8
+import os
 from math import sqrt
 import webapp3
 import tweepy
 import re
-from key import ckey, csec, atok, asec
 
-auth = tweepy.OAuthHandler(ckey, csec)
-auth.set_access_token(atok, asec)
+auth = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET'])
+auth.set_access_token(os.environ['ACCESS_TOKEN_KEY'], os.environ['ACCESS_TOKEN_SECRET'])
 api = tweepy.API(auth)
 
 

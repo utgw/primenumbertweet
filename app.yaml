@@ -3,3 +3,6 @@ runtime: python38
 handlers:
 - url: .*
   script: auto
+
+includes:
+  - secret.yaml
