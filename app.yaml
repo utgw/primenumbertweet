@@ -2,10 +2,6 @@ runtime: python38
 api_version: 1
 threadsafe: false
 
-libraries:
-- name: ssl
-  version: "latest"
-
 handlers:
 - url: .*
   script: main.py
