@@ -1,6 +1,6 @@
 # coding: utf-8
 from math import sqrt
-import webapp2
+import webapp3
 import tweepy
 import re
 from key import ckey, csec, atok, asec
@@ -24,7 +24,7 @@ def isp(n):
     return True
 
 
-class TweetHandler(webapp2.RequestHandler):
+class TweetHandler(webapp3.RequestHandler):
     def get(self):
         global api
         if not self.request.headers.get("X-Appengine-Cron"):
@@ -43,7 +43,7 @@ class TweetHandler(webapp2.RequestHandler):
                 pass
 
 
-app = webapp2.WSGIApplication([('/tweet', TweetHandler)], debug=True)
+app = webapp3.WSGIApplication([('/tweet', TweetHandler)], debug=True)
 
 if __name__ == '__main__':
     app.run()
