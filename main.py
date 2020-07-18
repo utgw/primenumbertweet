@@ -42,8 +42,8 @@ class TweetHandler(webapp3.RequestHandler):
         except tweepy.TweepError:
             num = 2
         else:
-            text = u'%d は素数' % num
-            text += u'です' if is_prime(num) else u'ではありません'
+            text = '%d は素数' % num
+            text += 'です' if is_prime(num) else 'ではありません'
             try:
                 api.update_status(text)
                 self.response.write('tweet successful')
