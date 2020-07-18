@@ -24,8 +24,12 @@ def isp(n):
     return True
 
 
+def is_debug_request(request):
+    return request.headers.get('X-Debug-Token') == os.environ['DEBUG_TOKEN']
+
+
 def is_trusted_requst(request):
-    return request.headers.get("X-Appengine-Cron")
+    return request.headers.get("X-Appengine-Cron") or is_debug_request(request)
 
 class TweetHandler(webapp3.RequestHandler):
     def get(self):
