@@ -16,3 +16,4 @@ skip_files:
 - .*\.pyc$
 - README\.md
 - LICENSE
+- ENV
