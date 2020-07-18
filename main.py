@@ -24,10 +24,13 @@ def isp(n):
     return True
 
 
+def is_trusted_requst(request):
+    return request.headers.get("X-Appengine-Cron")
+
 class TweetHandler(webapp3.RequestHandler):
     def get(self):
         global api
-        if not self.request.headers.get("X-Appengine-Cron"):
+        if not is_trusted_requst(self.request):
             self.response.write('not permitted')
             return
         try:
