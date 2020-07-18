@@ -1,8 +1,10 @@
 import os
 from math import sqrt
-import webapp3
+from flask import Flask, request
 import tweepy
 import re
+
+app = Flask(__name__)
 
 auth = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET'])
 auth.set_access_token(os.environ['ACCESS_TOKEN_KEY'], os.environ['ACCESS_TOKEN_SECRET'])
@@ -30,28 +32,25 @@ def is_debug_request(req):
 def is_trusted_requst(req):
     return req.headers.get("X-Appengine-Cron") or is_debug_request(req)
 
-class TweetHandler(webapp3.RequestHandler):
-    def get(self):
-        global api
-        if not is_trusted_requst(self.request):
-            self.response.write('not permitted')
-            return
+@app.route('/tweet')
+def tweet():
+    global api
+    if not is_trusted_requst(request):
+        return 'not permitted', 403
+    try:
+        num = int(re.search(r'(\d+)', list(api.user_timeline(
+            screen_name=api.me().screen_name, count=1))[0].text).group(1)) + 1
+    except tweepy.TweepError:
+        num = 2
+    else:
+        text = '%d は素数' % num
+        text += 'です' if is_prime(num) else 'ではありません'
         try:
-            num = int(re.search(r'(\d+)', list(api.user_timeline(
-                screen_name=api.me().screen_name, count=1))[0].text).group(1)) + 1
+            api.update_status(text)
+            return 'tweet successful'
         except tweepy.TweepError:
-            num = 2
-        else:
-            text = '%d は素数' % num
-            text += 'です' if is_prime(num) else 'ではありません'
-            try:
-                api.update_status(text)
-                self.response.write('tweet successful')
-            except tweepy.TweepError:
-                self.response.write('tweet failure')
+            return 'tweet failure', 500
 
-
-app = webapp3.WSGIApplication([('/tweet', TweetHandler)], debug=True)
 
 if __name__ == '__main__':
     app.run()
