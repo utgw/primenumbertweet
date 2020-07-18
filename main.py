@@ -17,7 +17,7 @@ def isp(n):
     if n == 2:
         return True
 
-    for k in xrange(2, int(sqrt(n))+1):
+    for k in range(2, int(sqrt(n))+1):
         if n % k == 0:
             return False
 
