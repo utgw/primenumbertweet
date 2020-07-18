@@ -10,7 +10,7 @@ auth.set_access_token(os.environ['ACCESS_TOKEN_KEY'], os.environ['ACCESS_TOKEN_S
 api = tweepy.API(auth)
 
 
-def isp(n):
+def is_prime(n):
     if n <= 1:
         return False
 
@@ -44,7 +44,7 @@ class TweetHandler(webapp3.RequestHandler):
             num = 2
         else:
             text = u'%d は素数' % num
-            text += u'です' if isp(num) else u'ではありません'
+            text += u'です' if is_prime(num) else u'ではありません'
             try:
                 api.update_status(text)
                 self.response.write('tweet successful')
