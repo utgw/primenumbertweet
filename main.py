@@ -1,4 +1,3 @@
-# coding: utf-8
 import os
 from math import sqrt
 import webapp3
