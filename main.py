@@ -28,6 +28,7 @@ class TweetHandler(webapp3.RequestHandler):
     def get(self):
         global api
         if not self.request.headers.get("X-Appengine-Cron"):
+            self.response.write('not permitted')
             return
         try:
             num = int(re.search(r'(\d+)', list(api.user_timeline(
@@ -39,8 +40,9 @@ class TweetHandler(webapp3.RequestHandler):
             text += u'です' if isp(num) else u'ではありません'
             try:
                 api.update_status(text)
+                self.response.write('tweet successful')
             except tweepy.TweepError:
-                pass
+                self.response.write('tweet failure')
 
 
 app = webapp3.WSGIApplication([('/tweet', TweetHandler)], debug=True)
