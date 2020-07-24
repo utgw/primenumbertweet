@@ -1,0 +1,26 @@
+name: Deploy to GAE
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: GoogleCloudPlatform/github-actions@0.1.2
+        with:
+          version: '290.0.1'
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      # TODO: Generate secret.yaml
+      # env_variables:
+      #   API_KEY: ...
+
+      - name: Deploy
+        run: make deploy
